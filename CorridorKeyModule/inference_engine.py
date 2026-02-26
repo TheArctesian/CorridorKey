@@ -142,7 +142,8 @@ class CorridorKeyEngine:
                  return output * refiner_scale
              handle = self.model.refiner.register_forward_hook(scale_hook)
              
-        out = self.model(inp_t)
+        with torch.autocast(device_type=self.device.type, dtype=torch.float16):
+            out = self.model(inp_t)
         
         if handle:
             handle.remove()
