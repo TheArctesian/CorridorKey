@@ -114,9 +114,9 @@ If you prefer not to install dependencies locally, you can run CorridorKey in Do
 3. Docker Compose (recommended for repeat runs):
    ```bash
    docker compose build
-   docker compose run --rm corridorkey --action run_inference --device cuda
-   docker compose run --rm corridorkey --action list
-   docker compose run --rm corridorkey-cpu --action run_inference --device cpu
+   docker compose --profile gpu run --rm corridorkey --action run_inference --device cuda
+   docker compose --profile gpu run --rm corridorkey --action list
+   docker compose --profile cpu run --rm corridorkey-cpu --action run_inference --device cpu
    ```
 
 Notes:
@@ -131,7 +131,7 @@ Notes:
     -v "$(pwd)/gvm_core/weights:/app/gvm_core/weights" \
     -v "$(pwd)/VideoMaMaInferenceModule/checkpoints:/app/VideoMaMaInferenceModule/checkpoints" \
     corridorkey:latest --action wizard --win_path /app/ClipsForInference
-  docker compose run --rm corridorkey --action wizard --win_path /app/ClipsForInference
+  docker compose --profile gpu run --rm corridorkey --action wizard --win_path /app/ClipsForInference
   ```
 
 ### 3. Usage: The Command Line Wizard

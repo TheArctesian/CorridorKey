@@ -1,28 +1,29 @@
 services:
   corridorkey:
+    profiles: ["gpu"]
     build:
       context: .
       dockerfile: Dockerfile
     image: corridorkey:latest
+    gpus: all
     environment:
-      OPENCV_IO_ENABLE_OPENEXR: "1"
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility,video
     volumes:
       - ./ClipsForInference:/app/ClipsForInference
       - ./Output:/app/Output
       - ./CorridorKeyModule/checkpoints:/app/CorridorKeyModule/checkpoints
       - ./gvm_core/weights:/app/gvm_core/weights
       - ./VideoMaMaInferenceModule/checkpoints:/app/VideoMaMaInferenceModule/checkpoints
-    gpus: all
     stdin_open: true
     tty: true
 
   corridorkey-cpu:
+    profiles: ["cpu"]
     build:
       context: .
       dockerfile: Dockerfile
     image: corridorkey:latest
-    environment:
-      OPENCV_IO_ENABLE_OPENEXR: "1"
     volumes:
       - ./ClipsForInference:/app/ClipsForInference
       - ./Output:/app/Output
